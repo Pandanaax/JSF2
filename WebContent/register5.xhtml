@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:head>
+	
+	<title>Un formulaire d'inscription JSF</title>
+</h:head>
+<body>
+	<!-- DECLARATION DU TEMPLATE DONT LA PAGE EST CLIENTE -->
+	<ui:composition template="/resources/template/layout.xhtml">
+
+	<!-- Redéfinition de la zone 'content' du layout  	-->
+	<ui:define name="content">
+
+		<f:view>
+			<body>
+				<h:form>
+					<h4>
+						Formulaire JSF d'inscription à l'<a
+							href="https://www.doranco.fr/candidature/parcours/41?">Ecole DORANCO</a>.
+					</h4>
+					<table>	
+						<tr>
+							<td>Nom:</td>
+							<td><h:inputText value="#{userbean.nom}" required="true" id="nom"></h:inputText>
+								<h:message for="nom" /></td>
+						</tr>
+						<tr>
+							<td>Prénom:</td>
+							<td><h:inputText value="#{userbean.prenom}" required="true" id="prenom"></h:inputText>
+								<h:message for="prenom" /></td>
+						</tr>
+						<tr>
+							<td>Date de naissance:</td>
+							<td><h:inputText value="#{userbean.dateNaissance}" id="datenaissance" required="true">
+								</h:inputText> (mm-dd-yy) <h:message for="datenaissance" /></td>
+						</tr>
+						<tr>
+							<td>Sexe:</td>
+							<td><h:selectOneRadio value="#{userbean.genre}" required="true" id="genre">
+									<f:selectItem itemLabel="Homme" itemValue="homme" />
+									<f:selectItem itemLabel="Femme" itemValue="femme" />
+								</h:selectOneRadio> <h:message for="genre" /></td>
+						</tr>
+						<tr>
+							<td>Email:</td>
+							<td><h:inputText value="#{userbean.email}" required="true" id="email"></h:inputText>
+								<h:message for="email" /></td>
+						</tr>
+						<tr>
+							<td>Qualité de service:</td>
+							<td><h:selectOneMenu value="niveauDeService">
+									<f:selectItem itemLabel="Basic" itemValue="basic" />
+									<f:selectItem itemLabel="Medium" itemValue="medium" />
+									<f:selectItem itemLabel="Premium" itemValue="premium" />
+								</h:selectOneMenu></td>
+						</tr>
+					</table>
+					<p>
+						<h:commandButton value="Inscription" action="#{userbean.addAction()}" />
+					</p>
+					</h:form>
+					
+					<h:form>
+					<h4> Liste des participants inscrits</h4>
+					
+					<h:dataTable value="#{userbean.listUsers}" var="o"
+						styleClass="order-table" headerClass="order-table-header"
+						rowClasses="order-table-add-row, order-table-even-row">
+						
+						<h:column>
+						<!-- column header -->
+						<f:facet name="header">Prénom</f:facet>
+						<!-- row record -->
+						<h:outputText value="#{o.prenom}"/>
+						</h:column>
+						<h:column>
+						<!-- column header -->
+						<f:facet name="header">Nom</f:facet>
+						<!-- row record -->
+						<h:outputText value="#{o.nom}"/>
+						</h:column>
+						<h:column>
+						<!-- column header -->
+						<f:facet name="header">Email</f:facet>
+						<!-- row record -->
+						<h:outputText value="#{o.email}"/>
+						</h:column>
+						<h:column>
+						<!-- column header -->
+						<f:facet name="header">Date de Naissance</f:facet>
+						<!-- row record -->
+						<h:outputText value="#{o.dateNaissance}"/>
+						</h:column>
+						<h:column>
+						<!-- column header -->
+						<f:facet name="header">Niveau de ServiceS</f:facet>
+						<!-- row record -->
+						<h:outputText value="#{o.niveauDeService}"/>
+						</h:column>
+						<h:column>
+						<f:facet name="header">Action</f:facet>
+						<h:commandLink value="Supprimer" action="#{userbean.deleteAction(o)}"></h:commandLink>
+						</h:column>
+						<h:column>
+						<f:facet name="header">Action</f:facet>
+						<h:commandButton value="Supprimer" action="#{userbean.deleteAction(o)}"></h:commandButton>
+						</h:column>								
+						</h:dataTable>
+				</h:form>
+			</body>
+		</f:view>
+	</ui:define>
+	</ui:composition>
+</body>
+
+</html>
+
